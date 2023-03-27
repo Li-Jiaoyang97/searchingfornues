@@ -472,19 +472,14 @@ void DefaultAnalysis::analyzeEvent(art::Event const &e, bool fData)
       std::cout << "[DefaultAnalysis::analyzeEvent] LEE MCEventWeight not present" << std::endl;
     }
 
-    std::cout<<"Here0"<<std::endl;
     // SaveTruth
     SaveTruth(e);
-    std::cout<<"Here1"<<std::endl;
 
     const std::vector<sim::MCShower> &inputMCShower = *(e.getValidHandle<std::vector<sim::MCShower>>(fMCRproducer));
-    std::cout<<"Here1/1"<<std::endl;
     const std::vector<sim::MCTrack> &inputMCTrack = *(e.getValidHandle<std::vector<sim::MCTrack>>(fMCRproducer));
-    std::cout<<"Here1/2"<<std::endl;
     _truthFiducial = searchingfornues::TruthContained(fFidvolXstart, fFidvolYstart, fFidvolZstart,
                                                       fFidvolXend, fFidvolYend, fFidvolZend,
                                                       inputMCShower, inputMCTrack);
-    std::cout<<"Here1/3"<<std::endl;
   } // if MC
 
   // Grab CRT veto information if available - CRT should probably have its own tool?
@@ -496,10 +491,9 @@ void DefaultAnalysis::analyzeEvent(art::Event const &e, bool fData)
     if (_crtveto == 1)
       _crthitpe = crtveto_h->at(0).first->peshit;
   } // if the CRT veto label has been defined
-  std::cout<<"Here2"<<std::endl;
+  
   art::ValidHandle<std::vector<recob::Hit>> inputHits = e.getValidHandle<std::vector<recob::Hit>>(fHproducer);
   evnhits = inputHits->size();
-  std::cout<<"Here3"<<std::endl;
 }
 
 void DefaultAnalysis::analyzeSlice(art::Event const &e, std::vector<ProxyPfpElem_t> &slice_pfp_v, bool fData, bool selected)
@@ -1617,8 +1611,6 @@ void DefaultAnalysis::SaveTruth(art::Event const &e)
       }     // for all particles, second loop
     }       // if muon is contained
   }         // if there is a muon, we are searching for a possible Michel decay
-
-  std::cout<<"--End of SaveTruth function. --"<<std::endl;
   return;
 }
 
